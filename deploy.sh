@@ -16,7 +16,7 @@ git commit -m 'deploy'
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
 # git push -f git@github.com:xdmatirx/xdmatirx.github.io.git master
 
-git push -f git@github.com:xdmatirx/mydiary.git master:gh-pages
+git push -f https://gitee.com/zzPjj/mydiary.git master:gh-pages
 
 # git push origin master
 

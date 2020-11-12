@@ -207,10 +207,13 @@ enumberable查看是否可以枚举 出现在for in循环中
 是否可枚举，可以用
 
 
-in操作符可以检测属性是否在对象及其prototype原型链中，
+in操作符可以检测属性是否在对象及其prototype原型链中，包括不可枚举的。
 然后 hasOwnProperty只会检测是否在 对象 上，不会检测到原型链上。
 Object.prototype.hasOwnProperty.call(obj, 'a')来检查是毕竟稳妥的。
 注意 这里检测的都是key
+
+for in 会遍历对象和原型链上所有可枚举的属性
+
 ```javascript
 Object.defineProperty(obj, 'b', {
   enumberable: false,
@@ -232,5 +235,32 @@ Object.getOwnPropertyNames(obj) // ['a','b'] 获取所有键，包括不可枚�
 多态 继承 
 
 构造函数：初始化实例时 会提供所需要的信息。
+通过 Object.create() 可给两对象建立关联
+let m = Object.create({})
+将m的 prototype 指向一个空对象
+
+---
+利用
+```javascript
+Object.getPrototypeOf(a) === Foo.prototype // true
+// 可以查看a对象的原型对象
+```
+
+实例对象的constructor实际也是调用的 原型对象上的constructor属性
+即
+```js
+a.constructor === Foo.prototype.constructor
+```
+
+如果要修改对象的原型对象，建议使用以下方式
+```js
+Bar.prototype = Object.create(Foo.prototype)
+
+// ES6
+Object.setPrototypeOf(Bar.prototype, Foo.prototype)
+```
+
+判断对象之间是否存在关联
+
 
 
