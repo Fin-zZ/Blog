@@ -261,6 +261,40 @@ Object.setPrototypeOf(Bar.prototype, Foo.prototype)
 ```
 
 判断对象之间是否存在关联
+用 instanceof并不是十分准确
+
+建议
+```js
+Foo.prototype.isPrototypeOf(a) 
+// 含义就是在a的整条prototype链中，有无出现过Foo.prototype
+```
+其次是
+```js
+Object.getPrototypeOf(a) === Foo.prototype // true
+
+a.__proto__ === Foo.prototype // 但不是所有浏览器都支持
+
+.__proto__
+// 类似于下面这个
+Object.defineProperty(Object.Prototype, '__proto__', {
+  get: function () { 
+      return Object.prototype.getPrototypeOf(this)  
+ },
+  set: function (o) { 
+      Object.setPrototypeOf(this, o)
+      return o
+ }
+})
+```
+
+### 对象关联
+prototype机制存在与对象之间，能够引用其他对象。作用通常就是，在该对象上没找到的属性或者方法，
+会沿着Prototype链关联上的对象接着查找。
+这一系列对象成为原型链。
+
+Object.create(null) 会 创 建 一 个 拥 有 空（ 或 者 说 null ） [[Prototype]] 链接的对象， 这个对象无法进行委托。 由于这个对象没有原型链， 所以 instanceof 操作符（之前解释过）无法进行判断， 因此总是会返回 false 。 这些特殊的空 [[Prototype]] 对象通常被称作“字典”，它们完全不会受到原 型链的干扰，因此非常适合用来存储数据。
+
+
 
 
 
