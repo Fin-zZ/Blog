@@ -121,7 +121,17 @@ this的绑定和函数声明的位置没什么关系，只取决于函数的调�
     2 该空对象会被执行 原型 的连接
     3 这个空对象会绑定到函数调用的this
     4 如果函数没有返回其他对象，new表达式中的函数调用会自动返回这个新对象。
-    
+    ```js
+    var obj = new Foo() // 1 创建一个空对象
+    let args = Array.prototype.slice.call(arguments, 1)
+    obj.__proto__ = Foo.prototype
+    let res = Foo.apply(obj, args)
+    if(typeof(res) === 'object') {
+      return res
+    } else {
+      return obj
+    }
+    ```
 this绑定优先级 
  new，指向新创建的对象。
  显示绑定 call apply，只想传入的对象
@@ -262,6 +272,28 @@ Object.setPrototypeOf(Bar.prototype, Foo.prototype)
 
 判断对象之间是否存在关联
 用 instanceof并不是十分准确
+尽可能使用
+Object.getPrototypeOf(Bar)
+Foo.prototype.isPrototypeOf()
+
+```js
+function myInstanceof(left, right) {
+  let source = right.prototype
+  let target = left.__proto__
+  // 一直查找
+  while(true) {
+    if(target === null) {
+      return false
+    }
+    if(target === source) {
+      return true
+    }
+    target = target.__proto__
+  }
+
+}
+```
+
 
 建议
 ```js
@@ -294,7 +326,13 @@ prototype机制存在与对象之间，能够引用其他对象。作用通常�
 
 Object.create(null) 会 创 建 一 个 拥 有 空（ 或 者 说 null ） [[Prototype]] 链接的对象， 这个对象无法进行委托。 由于这个对象没有原型链， 所以 instanceof 操作符（之前解释过）无法进行判断， 因此总是会返回 false 。 这些特殊的空 [[Prototype]] 对象通常被称作“字典”，它们完全不会受到原 型链的干扰，因此非常适合用来存储数据。
 
+这里建议如果使用 for in循环找对象身上的属性
+一定要结合 hasOwnProperty,这样遍历出来的属性是一定是 对象 身上且可枚举的属性。
 
 
+小总结：如果要访问的对象中并不存在一个属性，[[get]]会通过对象内部的prototype链查找上去，直到找到或者结束。
 
+将两个对象关联起来的最常用方法就是用 new 关键词
+
+js 的 继承更适合用委托这个术语。
 
