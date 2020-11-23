@@ -40,3 +40,13 @@ if( (n && m) || b) {
 }
 console.log(Math.random())
 console.log(![]==[])
+
+function myReq() {
+  return new Promise((resolve, reject) => {
+    if() {
+      resolve()
+    } else {
+      reject()
+    }
+  })
+}
