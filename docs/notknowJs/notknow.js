@@ -43,10 +43,36 @@ console.log(![]==[])
 
 function myReq() {
   return new Promise((resolve, reject) => {
-    if() {
+    if(a) {
       resolve()
     } else {
       reject()
     }
   })
 }
+
+
+if(!Promise.wrap) {
+  Promise.wrap = function (anyFun) {
+    return function () {
+      let arg = Array.prototype.slice.call(arguments)
+      return new Promise((resolve, reject) => {
+        // 将原先的参数还给anyFun，并添加一个fun用于监听成功失败
+        anyFun.apply(null, arg.concat(function (err, value) {
+          if(err) {
+            reject()
+          } else {
+            resolve()
+          }
+        }))
+      })
+    }
+
+  }
+}
+
+
+
+
+
+
