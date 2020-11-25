@@ -32,21 +32,63 @@
 // };
 // console.log(Date.now())
 // Date.now()
-let m = null
-let n = 42
-let b
-if( (n && m) || b) {
-  console.log('a')
-}
-console.log(Math.random())
-console.log(![]==[])
+// let m = null
+// let n = 42
+// let b
+// if( (n && m) || b) {
+//   console.log('a')
+// }
+// console.log(Math.random())
+// console.log(![]==[])
 
-function myReq() {
-  return new Promise((resolve, reject) => {
-    if() {
-      resolve()
-    } else {
-      reject()
-    }
-  })
+// function myReq() {
+//   return new Promise((resolve, reject) => {
+//     if() {
+//       resolve()
+//     } else {
+//       reject()
+//     }
+//   })
+// }
+
+// var p1 = new Promise((resolve, reject) => {
+//   resolve('yeah')
+// })
+
+// var p2 = Promise.resolve('yeah')
+
+// p1.then(res => {
+//   console.log(res)
+// })
+
+// p2.then(res => {
+//   console.log(res)
+// })
+
+var fulfilled = {
+  then: function(resolve, reject) {
+    resolve('yyyy')
+  }
 }
+
+var rejected = {
+  then: function(resolve, reject) {
+    reject('a')
+  }
+}
+
+Promise.resolve(fulfilled)
+  .then(res => {
+    console.log(res)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+
+  Promise.resolve(rejected)
+  .then(res => {
+    console.log(res)
+  })
+  .catch(err => {
+    console.log(err)
+  })
