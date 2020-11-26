@@ -76,19 +76,41 @@ var rejected = {
     reject('a')
   }
 }
+console.log(Math.random())
+console.log(![]==[])
 
-Promise.resolve(fulfilled)
-  .then(res => {
-    console.log(res)
+function myReq() {
+  return new Promise((resolve, reject) => {
+    if(a) {
+      resolve()
+    } else {
+      reject()
+    }
   })
-  .catch(err => {
-    console.log(err)
-  })
+}
 
-  Promise.resolve(rejected)
-  .then(res => {
-    console.log(res)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+
+if(!Promise.wrap) {
+  Promise.wrap = function (anyFun) {
+    return function () {
+      let arg = Array.prototype.slice.call(arguments)
+      return new Promise((resolve, reject) => {
+        // 将原先的参数还给anyFun，并添加一个fun用于监听成功失败
+        anyFun.apply(null, arg.concat(function (err, value) {
+          if(err) {
+            reject()
+          } else {
+            resolve()
+          }
+        }))
+      })
+    }
+
+  }
+}
+
+
+
+
+
+
