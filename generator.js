@@ -123,11 +123,68 @@ function req(arg) {
   })
 }
 
-function *main(){
-
-}
-
 function run() {
 
 }
+
 // 生成器 加 Promise
+
+function req(arg) {
+  return request('www.aaa.com/' + arg)
+}
+
+function *run() {
+  try{
+    let result = yield req('/api')
+    console.log(result)
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+let it = run()
+
+// 返回一个promise
+let promiseTest = it.next().value
+
+promiseTest
+  .then(res => {
+    it.next(res)
+  })
+  .catch(err => {
+    it.throw(err)
+  })
+
+
+// 异步运行传入的生成器
+function asyncRun(generator) {
+  // 首次需要传给generator的参数，跟在后面
+  let args = [].slice.call(arguments, 1), it
+  it = generator.apply(this, args)
+  // 这样就获得了一个迭代器 it
+  return  Promise.resolve()
+            .then(function handNext(value) {
+              // 这里的返回一个promise就是nextP
+              let nextP = it.next(value)
+              // 针对next出来的value进行判断是否迭代完成
+              return (function handResult(nextP) {
+                if(nextP.done) {
+                  return nextP.value
+                } else {
+                  // 将这个promise继续
+                  return Promise.resolve(nextP.value)
+                    .then(
+                      handNext, 
+                      function handErr(err) {
+                        return Promise.resolve(
+                          it.throw(err)
+                        )
+                        .then(handResult)
+                      }
+                    )
+                }
+
+              // 这个promise得丢进 立即执行函数 里
+              })(nextP)
+            })
+}
