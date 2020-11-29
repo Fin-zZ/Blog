@@ -99,9 +99,41 @@ function req(url) {
 生成器的yield暂停特性可以让我们从异步函数里得到看似同步返回的值，
 还能够同步捕获异步的错误。
 
+在实现高级流程控制时，生成器内部应该没有promise的逻辑，将其隐藏起来，
+有意的抽取promise部分放到调用的函数内，使得两边代码干净。
 
+### thunk
+指的是js中一个调用了另一个function 的 function，没有任何参数。
 
+```js
+function foo(x, y) {
+  return x + y
+}
 
+function fooThunk() {
+  return foo(3, 4)
+}
+```
+
+```js
+function thunkify(fun) {
+  let args = [].slice.call(arguments, 1)
+  return function(callback) {
+    return fun.apply(null, args.push(callback))
+  }
+}
+```
+```js
+function thunkory(fn) {
+  return function(){
+    let args = [].slice.call(arguments)
+    return function(cb) {
+      args.push(cb)
+      return fn.apply(null, args)
+    }
+  }
+}
+```
 
 
 
