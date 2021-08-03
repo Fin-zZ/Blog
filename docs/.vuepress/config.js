@@ -1,8 +1,8 @@
 
 module.exports = {
-    title: '超级爱吨吨',
-    base: '/mydiary/',
-    description: 'muamua',
+    title: 'blog',
+    base: '/blog/',
+    // description: 'muamua',
     themeConfig: {
       lastUpdated: 'Last Updated',
       smoothScroll: true,
@@ -12,7 +12,7 @@ module.exports = {
         }
       ],
       nav: [
-        {text: 'HOME', link: '/css/css_chapter.html'},
+        {text: 'HOME', link: '/css/flex.html'},
         {text: 'github', link: 'https://xdmatirx.github.io/'}
       ]
     },

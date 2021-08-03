@@ -12,5 +12,8 @@
     "vuepress-plugin-fulltext-search": "^2.0.3",
     "vuepress-plugin-permalink-pinyin": "^1.0.0",
     "vuepress-plugin-rpurl": "boboidream/vuepress-plugin-rpurl"
+  },
+  "dependencies": {
+    "markdown-toc": "^1.2.0"
   }
 }

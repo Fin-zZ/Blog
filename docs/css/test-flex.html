@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .father{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+          "son1 son1 son1"
+          "son2 son3 son3"
+          "son2 son3 son3"
+          "son4 son3 son3";
+        gap: 2px 3px ;
+    }
+    .son1{
+        grid-area: son1;
+        background-color: mediumvioletred;
+    }
+
+    .son2{
+        grid-area: son2;
+        background-color: greenyellow;
+    }
+
+    .son3{
+        grid-area: son3;
+        background-color: bisque;
+    }
+
+    .son4{
+        grid-area: son4;
+        background-color: gold;
+    }
+  </style>
+</head>
+<body>
+  <div class="father">
+    <p class="son1">line1</p>
+    <p class="son2">line2</p>
+    <p class="son3">line3</p>
+    <p class="son4">line4</p>
+  </div>
+</body>
+</html>

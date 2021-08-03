@@ -3,15 +3,15 @@ home: true
 
 
 actionText: hey baby
-actionLink: /diary/
+actionLink: /css/flex.html
 features:
 
-- title: 吨吨爱吨吨喝水
+- title: 工作中的各种疑难杂症
 
 
-- title: 吨吨and乖乖
+- title: 日常学习的积累
 
 
-- title: 乖乖爱乖乖睡觉
+- title: 记录
 
 ---
