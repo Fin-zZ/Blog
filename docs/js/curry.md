@@ -1,4 +1,4 @@
-curry
+# curry
 
 分批的给函数传参数，更具不同的配置实现不同fun。
 
@@ -23,10 +23,7 @@ const addFn = function(...initArgs) {
 //这样就是最后一个为空时，得到结果
 let sum = addFn(1)(2)(3)
 console.log( sum(2)() )
-
 ```
-
-
 
 ```js
 // 通用curry

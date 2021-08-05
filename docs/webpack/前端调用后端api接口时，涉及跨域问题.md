@@ -1,6 +1,6 @@
 # 最佳实践
 
-## 前端调用后端api接口时，涉及到跨域问题CROS
+## 前端调用后端api接口时，涉及到跨域问题CORS
 
 跨域资源共享([CORS](https://developer.mozilla.org/zh-CN/docs/Glossary/CORS)) 是一种机制，允许运行在一个 origin (domain) 上的浏览器，被准许访问不同源的服务器上的资源。
 
@@ -15,9 +15,8 @@
 
 一般的跨域问题直接修改`vue.config.js` 的 `devServer` 的`proxy` 选项即可，无需设置下方的`onProxyReq`选项。该选项是为了跳过登录验证，使得修改端口后访问接口时能携带`cookie`。
 
-```javascript
+```
 //vue.config.js
-
 devServer: {
     host: '0.0.0.0',
     port: 8080,
@@ -27,10 +26,9 @@ devServer: {
         changeOrigin: true, // 是否跨域
         ws: true,
         onProxyReq(proxyReq, req, res) {
-          const cookie = 'TGC=TGT-b0f20ebf-767b-47a4-8875-ce1826257212;';
+          const cookie = 'TGC=TGT-XXXXXXXXXXXXXXXXXX;';
           proxyReq.setHeader('Cookie', cookie);
         },
-        // 2020-06-01 15:53
         pathRewrite: {
           '/api': ''
         }
@@ -39,27 +37,14 @@ devServer: {
   }
 ```
 
-## 获取 `TGC` 的方法：
-
-打开金色平台
-
-![image-20200603165414967](C:\Users\fscut\AppData\Roaming\Typora\typora-user-images\image-20200603165414967.png)
-
-f12 打开DevTools(以chrome为例)
-
-打开查看Cookies中的 TGC 字段，复制出来就行。
-
-![img](C:\Users\fscut\AppData\Local\Temp\企业微信截图_15911745917086.png)
-
-其次，因为用了 `lsui`组件库，相应的也要设置 `baseURL`的值
-
 ```javascript
 //main.js
 Lsui.Request.setDefaults({
   //这里设置baseurl为 '/api' 就行，也就是proxy下的pathRewrite中的 '/api'
-  baseURL: '/api', method: 'post',	 
-  timeOut: 6000 });
-
+  baseURL: '/api',
+  method: 'post',	 
+  timeOut: 6000
+});
 ```
 
 如果是未封装axios

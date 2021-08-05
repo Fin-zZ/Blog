@@ -1,4 +1,4 @@
-## addeventListener 的passive 
+# addEventListener的passive参数作用 
 
 ## 简介：
 
@@ -12,12 +12,10 @@ useCapture默认false即冒泡阶段。
 
 但也可以是一个对象，
 
-```javascript
-{
+```
 	capture: Boolean,
 	once: Boolean,
 	passive: Boolean,
-}
 ```
 
 `once`表示`listener`在添加之后最多只调用一次。如果是`true`，`listener`会在其被调用之后自动移除，这跟我们在jQuery时代的`once`方法比较像。

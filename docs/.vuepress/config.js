@@ -1,8 +1,8 @@
 
 module.exports = {
-    title: 'blog',
-    base: '/blog/',
-    // description: 'muamua',
+    title: 'chez的开发记录',
+    base: '/Blog/',
+    description: 'Welcome to my Blog',
     themeConfig: {
       lastUpdated: 'Last Updated',
       smoothScroll: true,

@@ -2,15 +2,14 @@
 
 ## CopyWebpackPlugin
 
-[官网](https://webpack.js.org/plugins/copy-webpack-plugin/)               [官网](https://www.webpackjs.com/plugins/copy-webpack-plugin/)
-
+[官网](https://webpack.js.org/plugins/copy-webpack-plugin/)
 使用形式：
 
 ```js
 new CopyWebpackPlugin([patterns], options)
 ```
 
-```js
+```
 // pattern示例如下: 
 	{ 
       from: 'source', 
@@ -20,7 +19,7 @@ new CopyWebpackPlugin([patterns], options)
 
 #### 之前是对`public`下的 .ico图标进行复制
 
-```js
+```
 {
    from: path.resolve(__dirname, './public/*.ico'),
    to: path.resolve(__dirname, './dist/[name].[ext]'),
@@ -51,7 +50,7 @@ to 指的是打包后资源被放置的位置。 并且保留那些文件名和�
 
 toType很好理解
 
-```js
+```
 'file'：如果to有扩展名，或者from是文件
 
 'dir' :如果from是目录 或 to没有扩展名，或者以'/'结尾，
@@ -69,8 +68,6 @@ context
 
 这样就可以了。
 
-
-
 第二个是devServer
 
-借助工具switchHosts_windows_portble更改本地host，然后在vue.config.js里修改
+借助工具switchHosts_windows_portble更改本地host，然后在vue.config.js里修改对应的ip就行
