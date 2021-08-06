@@ -12,7 +12,7 @@ TCP的几个标记位
 6. URG 紧急
 7. CWR ECE用于拥塞控制
 
-![tcp-header](tcp-header.png)
+![tcp-header](./tcp-header.png)
 
 ### TCP三次握手
 client和server建立连接过程：

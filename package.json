@@ -5,6 +5,7 @@
     "push": "git add . && git commit -m'gh-pages update' && git push -u origin master",
     "deploy": "deploy.sh"
   },
+  "type": "module",
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.5.0",
     "prettier": "^2.1.1",
