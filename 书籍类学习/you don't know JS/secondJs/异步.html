@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>异步 事件循环 任务队列 | chez的开发记录</title>
+    <meta name="generator" content="VuePress 1.5.3">
+    
+    <meta name="description" content="Welcome to my Blog">
+    <link rel="preload" href="/Blog/assets/css/0.styles.1fec798e.css" as="style"><link rel="preload" href="/Blog/assets/js/app.a1114f8c.js" as="script"><link rel="preload" href="/Blog/assets/js/2.866c5de6.js" as="script"><link rel="preload" href="/Blog/assets/js/49.537b00f6.js" as="script"><link rel="prefetch" href="/Blog/assets/js/10.534131b1.js"><link rel="prefetch" href="/Blog/assets/js/11.8a0ff58c.js"><link rel="prefetch" href="/Blog/assets/js/12.62bb3539.js"><link rel="prefetch" href="/Blog/assets/js/13.24ad2885.js"><link rel="prefetch" href="/Blog/assets/js/14.a4cb8862.js"><link rel="prefetch" href="/Blog/assets/js/15.f0281d56.js"><link rel="prefetch" href="/Blog/assets/js/16.567b138d.js"><link rel="prefetch" href="/Blog/assets/js/17.8bb7b935.js"><link rel="prefetch" href="/Blog/assets/js/18.15582be5.js"><link rel="prefetch" href="/Blog/assets/js/19.20a45bab.js"><link rel="prefetch" href="/Blog/assets/js/20.a631142b.js"><link rel="prefetch" href="/Blog/assets/js/21.d179aeae.js"><link rel="prefetch" href="/Blog/assets/js/22.8d87217d.js"><link rel="prefetch" href="/Blog/assets/js/23.b1aec37c.js"><link rel="prefetch" href="/Blog/assets/js/24.91a02c92.js"><link rel="prefetch" href="/Blog/assets/js/25.3606dbc3.js"><link rel="prefetch" href="/Blog/assets/js/26.3b089f70.js"><link rel="prefetch" href="/Blog/assets/js/27.4a3fb2ed.js"><link rel="prefetch" href="/Blog/assets/js/28.87f1c8b2.js"><link rel="prefetch" href="/Blog/assets/js/29.49265de6.js"><link rel="prefetch" href="/Blog/assets/js/3.216b12c9.js"><link rel="prefetch" href="/Blog/assets/js/30.4a3ce54c.js"><link rel="prefetch" href="/Blog/assets/js/31.d4a363dd.js"><link rel="prefetch" href="/Blog/assets/js/32.b253a6b3.js"><link rel="prefetch" href="/Blog/assets/js/33.ebdd7b3c.js"><link rel="prefetch" href="/Blog/assets/js/34.799332a8.js"><link rel="prefetch" href="/Blog/assets/js/35.f551ea2b.js"><link rel="prefetch" href="/Blog/assets/js/36.af10435b.js"><link rel="prefetch" href="/Blog/assets/js/37.8f18f6dd.js"><link rel="prefetch" href="/Blog/assets/js/38.d5ac6763.js"><link rel="prefetch" href="/Blog/assets/js/39.99b39a43.js"><link rel="prefetch" href="/Blog/assets/js/4.ecfd39ba.js"><link rel="prefetch" href="/Blog/assets/js/40.a79247e2.js"><link rel="prefetch" href="/Blog/assets/js/41.eb9bd787.js"><link rel="prefetch" href="/Blog/assets/js/42.45ea26f8.js"><link rel="prefetch" href="/Blog/assets/js/43.ab38f2a9.js"><link rel="prefetch" href="/Blog/assets/js/44.c503315a.js"><link rel="prefetch" href="/Blog/assets/js/45.3c0b116f.js"><link rel="prefetch" href="/Blog/assets/js/46.d24f5965.js"><link rel="prefetch" href="/Blog/assets/js/47.4f9bfe3b.js"><link rel="prefetch" href="/Blog/assets/js/48.b379ed93.js"><link rel="prefetch" href="/Blog/assets/js/5.e991952f.js"><link rel="prefetch" href="/Blog/assets/js/50.f63129ef.js"><link rel="prefetch" href="/Blog/assets/js/51.942a34d1.js"><link rel="prefetch" href="/Blog/assets/js/6.271bb3d3.js"><link rel="prefetch" href="/Blog/assets/js/7.7b0d089c.js"><link rel="prefetch" href="/Blog/assets/js/8.89817a60.js"><link rel="prefetch" href="/Blog/assets/js/9.f7629a86.js">
+    <link rel="stylesheet" href="/Blog/assets/css/0.styles.1fec798e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/Blog/" class="home-link router-link-active"><!----> <span class="site-name">chez的开发记录</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/Blog/css/flex.html" class="nav-link">
+  HOME
+</a></div><div class="nav-item"><a href="https://xdmatirx.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/Blog/css/flex.html" class="nav-link">
+  HOME
+</a></div><div class="nav-item"><a href="https://xdmatirx.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Css</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Git</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Js</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Network</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Practice More</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Webpack</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Wx Weapp</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>书籍类学习</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading"><span>Css World</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable is-sub-group depth-1"><p class="sidebar-heading open"><span>You Dont Know JS</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/Blog/书籍类学习/you don't know JS/notknowJs/ES6.html" class="sidebar-link">ES6新增的变量 let const</a></li><li><a href="/Blog/书籍类学习/you don't know JS/notknowJs/ES6-4.html" class="sidebar-link">字符串扩展</a></li><li><a href="/Blog/书籍类学习/you don't know JS/notknowJs/class.html" class="sidebar-link">class</a></li><li><a href="/Blog/书籍类学习/you don't know JS/notknowJs/notknowjs.html" class="sidebar-link">1作用域</a></li><li><a href="/Blog/书籍类学习/you don't know JS/notknowJs/面向委托prototype设计.html" class="sidebar-link">prototype 委托设计模式</a></li><li><a href="/Blog/书籍类学习/you don't know JS/secondJs/generator.html" class="sidebar-link">生成器generator</a></li><li><a href="/Blog/书籍类学习/you don't know JS/secondJs/type.html" class="sidebar-link">type</a></li><li><a href="/Blog/书籍类学习/you don't know JS/secondJs/value.html" class="sidebar-link">value</a></li><li><a href="/Blog/书籍类学习/you don't know JS/secondJs/异步.html" class="active sidebar-link">异步 事件循环 任务队列</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Blog/书籍类学习/you don't know JS/secondJs/异步.html#回调" class="sidebar-link">回调</a></li><li class="sidebar-sub-header"><a href="/Blog/书籍类学习/you don't know JS/secondJs/异步.html#promise" class="sidebar-link">promise</a></li></ul></li><li><a href="/Blog/书籍类学习/you don't know JS/secondJs/性能.html" class="sidebar-link">性能方面的提升 微观（细节）</a></li><li><a href="/Blog/书籍类学习/you don't know JS/secondJs/程序性能.html" class="sidebar-link">程序性能</a></li></ul></section></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="异步-事件循环-任务队列"><a href="#异步-事件循环-任务队列" class="header-anchor">#</a> 异步 事件循环 任务队列</h1> <p>任务队列（job queue）概念:
+这是一个挂载在事件循环队列的每个tick之后的 一个队列
+在事件循环的每个tick中，可能出现异步操作，这些操作的将来部分不会阻塞，
+而会在当前tick的任务队列末尾添加一个 任务，将来去做。</p> <h2 id="回调"><a href="#回调" class="header-anchor">#</a> 回调</h2> <p>嵌套回调和链式回调形式影响我们人脑思考的顺序，也不符合我们的逻辑</p> <p>其次是采用了回调函数的是否可靠的问题，其可能出现以下问题</p> <ol><li>调用回调过早</li> <li>调用回调过晚，甚至没调用</li> <li>调用回调的次数太少或则和太多</li> <li>没有把所需的环境/参数成功传回来</li> <li>吞掉了可能出现的错误或者异常。</li> <li>...
+缺乏顺序性和可信任性。</li></ol> <p>以前的回调
+// 读取文件
+// 也可以是发请求等
+var fs = require(&quot;fs&quot;)
+fs.readFile('file.path', 'utf8', function(err, value) {
+if(err) {
+console.log(err)
+} else {
+console.log(value)
+}
+})
+是这样通过一个回调监听的。
+但容易出现callback hell
+需要对异步接口处理成Promise的方式。
+有很多库都直接转换，如
+bluebird 模块里有 promisify 方法</p> <p>es6-promisify 模块</p> <p>ThinkJS 里的 promisify 方法</p> <p>var myPromise = function(fun, receiver) {
+return function() {
+let args = [].slice(arguments)
+return new Promise((resolve, reject) =&gt; {
+fun.apply(reveiver, [].concat(args, [function(err, data) {
+return err ? reject(err) : resolve(data)
+}]))
+})
+}
+}</p> <h2 id="promise"><a href="#promise" class="header-anchor">#</a> promise</h2> <p>所以出现了promise来解决回调的多个问题</p> <p>promise对于以上5个问题的解决：</p> <ol><li><p>调用过早
+不存在，因为传给promise的必定执行异步操作，不会被同步检测到。</p></li> <li><p>调用过晚
+Promise创建的对象在调用resolve 或者 reject时，必然会触发
+promise.then(..)里面的回调。一定会在下一个异步事件点⬆上触发。</p></li> <li><p>回调未调用
+可以借助于添加一个超时promise进行竞态</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">timeoutPromise</span><span class="token punctuation">(</span><span class="token parameter">delay</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+     <span class="token function">reject</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+   <span class="token punctuation">}</span><span class="token punctuation">,</span> delay<span class="token punctuation">)</span>
+ <span class="token punctuation">}</span>     
+<span class="token punctuation">}</span>
+Promise<span class="token punctuation">.</span><span class="token function">race</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+ promiseA<span class="token punctuation">,</span>
+ <span class="token function">timeoutPromise</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div></li> <li><p>调用次数过少或者过多
+正确的就是应该 1 次。
+promise响应函数只会执行一次，除非你也触发了多次</p></li></ol> <h3 id="promise-api"><a href="#promise-api" class="header-anchor">#</a> Promise API</h3> <p>var p = new Promise(resolve, reject) {
+// resolve 用于成功
+// reject  用于失败
+}</p> <p>以下两个promise是等价的</p> <p>var p1 = new Promise((resolve, reject) =&gt; {
+resovle('yeah')
+})</p> <p>var p2 = Promise.resolve('yeah')</p> <p>但是呢，Promise.resolve也会展开传进来的对象的thenable值，这种情况下则返回thenable的值</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> fulfilled <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">then</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'yyyy'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> rejected <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">then</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">reject</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>fulfilled<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>rejected<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// yyyy</span>
+  <span class="token comment">// a</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/Blog/书籍类学习/you don't know JS/secondJs/value.html" class="prev">
+        value
+      </a></span> <span class="next"><a href="/Blog/书籍类学习/you don't know JS/secondJs/性能.html">
+        性能方面的提升 微观（细节）
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/Blog/assets/js/app.a1114f8c.js" defer></script><script src="/Blog/assets/js/2.866c5de6.js" defer></script><script src="/Blog/assets/js/49.537b00f6.js" defer></script>
+  </body>
+</html>
